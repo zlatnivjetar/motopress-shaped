@@ -879,7 +879,7 @@ class SearchResultsShortcode extends AbstractShortcode {
 								);
 								?>
 							</span>
-							<span class="mphb-recommendation-item-count"><?php echo esc_html( $roomsCount ) . ' × '; ?></span>
+							<span class="mphb-recommendation-item-count"><?php echo esc_html( $roomsCount ) . ' &times; '; ?></span>
 							<a href="<?php echo esc_url( $roomType->getLink() ); ?>" class="mphb-recommendation-item-link" target="_blank">
 								<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 								echo $roomType->getTitle();
@@ -1009,7 +1009,7 @@ class SearchResultsShortcode extends AbstractShortcode {
 				<a href="#" class="mphb-remove-from-reservation"><?php esc_html_e( 'Remove', 'motopress-hotel-booking' ); ?></a>
 				<p class="mphb-rooms-reservation-message"></p>
 			</div>
-			<button class="button mphb-button mphb-book-button"><?php esc_html_e( 'Secure Your Stay', 'motopress-hotel-booking' ); ?></button>
+			<button class="button mphb-button mphb-book-button"><?php esc_html_e( 'Book', 'motopress-hotel-booking' ); ?></button>
 			<button class="button mphb-button mphb-confirm-reservation"><?php esc_html_e( 'Confirm Reservation', 'motopress-hotel-booking' ); ?></button>
 		</div>
 		<?php

@@ -719,7 +719,7 @@ function mphb_tmpl_the_room_reservation_form( $roomTypeId = 0 ) {
 			<input id="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqueSuffix ); ?>" type="text" class="mphb-datepick" value="<?php echo esc_attr( $checkOutDateFormatted ); ?>" required="required" autocomplete="off" placeholder="<?php esc_attr_e( 'Check-out Date', 'motopress-hotel-booking' ); ?>" inputmode="none" />
 			<input id="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqueSuffix . '-hidden' ); ?>" type="hidden" name="mphb_check_out_date" value="<?php echo esc_attr( $checkOutDate ); ?>" />
 		</p>
-<?php
+		<?php
 		if ( ! $isDirectBooking || $directBookingPricing == 'capacity' ) {
 
 				$maxAdultsCount      = MPHB()->settings()->main()->getSearchMaxAdults();
@@ -753,7 +753,7 @@ function mphb_tmpl_the_room_reservation_form( $roomTypeId = 0 ) {
 			?>
 
 			<?php if ( MPHB()->settings()->main()->isAdultsDisabledOrHidden() ) { ?>
-			
+
 				<input type="hidden" id="<?php echo esc_attr( 'mphb_adults-' . $uniqueSuffix ); ?>" name="mphb_adults" value="<?php echo esc_attr( MPHB()->settings()->main()->getMinAdults() ); ?>" />
 			
 			<?php } else { ?>

@@ -16,6 +16,23 @@ class CheckoutView {
 	 */
 	public static function renderCustomerErrors() {
 
+		if ( isset( $_GET['login_failed'] ) && $_GET['login_failed'] == 'error' ) {
+			?>
+			<p class="mphb-errors-wrapper">
+			<?php echo esc_html__( 'Invalid login or password.', 'motopress-hotel-booking' ); ?>
+			</p>
+			<?php
+		}
+
+		if ( isset( $_GET['customer_error'] ) ) {
+			if ( $_GET['customer_error'] == 'wp_user_exists' ) {
+				?>
+				<p class="mphb-errors-wrapper">
+					<?php echo esc_html__( 'An account with this email already exists. Please, log in.', 'motopress-hotel-booking' ); ?>
+				</p>
+				<?php
+			}
+		}
 	}
 
 	/**
@@ -43,7 +60,23 @@ class CheckoutView {
 
 			$userDisplayName = $user->data->display_name;
 			$logout          = wp_logout_url();
-		
+			?>
+				<div class="mphb-login-form-wrap">
+					<p>
+						<?php
+						printf(
+							wp_kses(
+								// translators: 1 - username;
+								__( 'Hello %1$s (not %1$s? <a href="%2$s">Log out</a>).', 'motopress-hotel-booking' ),
+								array( 'a' => array( 'href' => array() ) )
+							),
+							esc_html( $userDisplayName ),
+							esc_url( $logout )
+						);
+						?>
+					</p>
+				</div>
+			<?php
 		}
 	}
 
@@ -143,15 +176,21 @@ class CheckoutView {
 	 * @since 3.7.0 added parameter $reservedRoom.
 	 * @since 3.7.0 parameter $roomType became third.
 	 */
-public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType ) {
-	?>
-	<h3 class="mphb-room-type-title">
-		<?php echo esc_html( $roomType->getTitle() ); ?>
-	</h3>
-	<?php
-}
-
-
+	public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType ) {
+		?>
+		<h3 class="mphb-room-number">
+			<?php echo esc_html( sprintf( __( 'Accommodation #%d', 'motopress-hotel-booking' ), $roomIndex + 1 ) ); ?>
+		</h3>
+		<p class="mphb-room-type-title">
+			<span>
+				<?php esc_html_e( 'Accommodation Type:', 'motopress-hotel-booking' ); ?>
+			</span>
+			<a href="<?php echo esc_url( $roomType->getLink() ); ?>" target="_blank">
+				<?php echo esc_html( $roomType->getTitle() ); ?>
+			</a>
+		</p>
+		<?php
+	}
 
 	/**
 	 * @param \MPHB\Entities\ReservedRoom $reservedRoom
@@ -250,9 +289,8 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		<p class="mphb-guest-name-wrapper">
 			<label for="<?php echo esc_attr( $idPrefix ); ?>-guest-name">
 				<?php esc_html_e( 'Full Guest Name', 'motopress-hotel-booking' ); ?>
-				<abbr title="<?php esc_html_e( 'Required', 'motopress-hotel-booking' ); ?>">*</abbr>
 			</label>
-			<input type="text" required="required" name="<?php echo esc_attr( $namePrefix ); ?>[guest_name]" id="<?php echo esc_attr( $idPrefix ); ?>-guest-name" value="<?php echo esc_attr( $presetGuestName ); ?>">
+			<input type="text" name="<?php echo esc_attr( $namePrefix ); ?>[guest_name]" id="<?php echo esc_attr( $idPrefix ); ?>-guest-name" value="<?php echo esc_attr( $presetGuestName ); ?>">
 		</p>
 		<?php
 	}
@@ -316,6 +354,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 								?>
 							</strong>
 						</label>
+						<br>
 						<?php echo esc_html( $rate->getDescription() ); ?>
 					</p>
 				<?php } // For each allowed rate ?>
@@ -354,9 +393,9 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 
 		?>
 		<section id="mphb-services-details-<?php echo esc_attr( $roomIndex ); ?>" class="mphb-services-details mphb-checkout-item-section">
-			<h6 class="mphb-services-details-title">
+			<h4 class="mphb-services-details-title">
 				<?php esc_html_e( 'Choose Additional Services', 'motopress-hotel-booking' ); ?>
-			</h6>
+			</h4>
 
 			<ul class="mphb_sc_checkout-services-list mphb_checkout-services-list">
 				<?php
@@ -422,7 +461,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 								$presetQuantity = apply_filters( 'mphb_sc_checkout_preset_service_quantity', $minQuantity, $service, $reservedRoom, $roomType );
 								$presetQuantity = mphb_limit( $presetQuantity, $minQuantity, $maxQuantity );
 							?>
-							× <input type="number" name="<?php echo esc_attr( $namePrefix ); ?>[quantity]" class="mphb_sc_checkout-service-quantity mphb_checkout-service-quantity" value="<?php echo esc_attr( $presetQuantity ); ?>" min="<?php echo esc_attr( $minQuantity ); ?>" <?php echo ! $service->isUnlimited() ? 'max="' . esc_attr( $maxQuantity ) . '"' : ''; ?> step="1"> <?php esc_html_e( 'time(s)', 'motopress-hotel-booking' ); ?>
+							&#215; <input type="number" name="<?php echo esc_attr( $namePrefix ); ?>[quantity]" class="mphb_sc_checkout-service-quantity mphb_checkout-service-quantity" value="<?php echo esc_attr( $presetQuantity ); ?>" min="<?php echo esc_attr( $minQuantity ); ?>" <?php echo ! $service->isUnlimited() ? 'max="' . esc_attr( $maxQuantity ) . '"' : ''; ?> step="1"> <?php esc_html_e( 'time(s)', 'motopress-hotel-booking' ); ?>
 						<?php } // Is flexible pay? ?>
 					</li>
 				<?php } ?>
@@ -434,9 +473,9 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 	public static function renderPriceBreakdown( $booking ) {
 		?>
 		<section id="mphb-price-details" class="mphb-room-price-breakdown-wrapper mphb-checkout-section">
-			<h3 class="mphb-price-breakdown-title">
+			<h4 class="mphb-price-breakdown-title">
 				<?php esc_html_e( 'Price Breakdown', 'motopress-hotel-booking' ); ?>
-			</h3>
+			</h4>
 			<?php \MPHB\Views\BookingView::renderPriceBreakdown( $booking ); ?>
 		</section>
 		<?php
@@ -475,14 +514,6 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		if ( $isOpenTermsInNewWindow || ! empty( $termsHtml ) ) {
 			?>
 			<section class="mphb-checkout-terms-wrapper mphb-checkout-section">
-			                        <div class="payment-methods">
-                        <?php $upload_url = wp_upload_dir()['baseurl']; ?>
-                        <img src="<?php echo $upload_url; ?>/2025/07/Apple-pay.png" alt="Apple Pay" class="payment-method-logo">
-                        <img src="<?php echo $upload_url; ?>/2025/07/Google-pay.png" alt="Google Pay" class="payment-method-logo">
-                        <img src="<?php echo $upload_url; ?>/2025/07/Visa.png" alt="Visa" class="payment-method-logo">
-                        <img src="<?php echo $upload_url; ?>/2025/07/Master.png" alt="Mastercard" class="payment-method-logo">
-                        <img src="<?php echo $upload_url; ?>/2025/07/Amex.png" alt="American Express" class="payment-method-logo">
-                    </div>
 
 				<?php if ( ! $isOpenTermsInNewWindow ) { ?>
 
@@ -494,22 +525,19 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 
 				<?php } ?>
 
-                <p class="mphb-terms-and-conditions-accept">
-                    <label>
-                        <input type="checkbox" id="mphb_accept_terms" name="mphb_accept_terms" value="1" required="required" />
-                        <?php
-                            $termsPageUrl = get_permalink($termsPageId);
-                            $privacyPageId = get_option('wp_page_for_privacy_policy');
-                            $privacyPageUrl = get_permalink($privacyPageId);
-                            
-                            $termsLink = '<a class="mphb-terms-link modal-trigger" href="' . esc_url($termsPageUrl) . '" data-modal="terms">' . __('Booking Terms', 'motopress-hotel-booking') . '</a>';
-                            $privacyLink = '<a class="mphb-privacy-link modal-trigger" href="' . esc_url($privacyPageUrl) . '" data-modal="privacy">' . __('Privacy Policy', 'motopress-hotel-booking') . '</a>';
-                            
-                            printf(__('I agree to the %s and %s for this reservation', 'motopress-hotel-booking'), $termsLink, $privacyLink);
-                        ?>
-                        <abbr title="<?php esc_html_e('Required', 'motopress-hotel-booking'); ?>">*</abbr>
-                    </label>
-                </p>
+				<p class="mphb-terms-and-conditions-accept">
+					<label>
+						<input type="checkbox" id="mphb_accept_terms" name="mphb_accept_terms" value="1" required="required" />
+						<?php
+							$termsPageUrl  = get_permalink( $termsPageId );
+							$termsPagelink = '<a class="mphb-terms-and-conditions-link" href="' . esc_url( $termsPageUrl ) . '" target="_blank">' . _x( 'terms & conditions', 'I\'ve read and accept the terms & conditions', 'motopress-hotel-booking' ) . '</a>';
+
+							// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+							printf( _x( 'I\'ve read and accept the %s', 'I\'ve read and accept the <tag>terms & conditions</tag>', 'motopress-hotel-booking' ), $termsPagelink );
+						?>
+						<abbr title="<?php esc_html_e( 'Required', 'motopress-hotel-booking' ); ?>">*</abbr>
+					</label>
+				</p>
 			</section>
 			<?php
 		}
@@ -562,6 +590,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
+				<br />
 				<input type="text" id="mphb_first_name" name="mphb_first_name" value="<?php echo esc_attr( $firstName ); ?>" 
 																								 <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -576,6 +605,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
+				<br />
 				<input type="text" name="mphb_last_name" id="mphb_last_name" value="<?php echo esc_attr( $lastName ); ?>" 
 																							   <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -590,6 +620,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
+				<br />
 				<input type="email" name="mphb_email" 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -604,6 +635,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
+				<br />
 				<input type="text" name="mphb_phone" 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -620,6 +652,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 						echo $requiredAbbr;
 						?>
 					</label>
+					<br />
 					<?php $defaultCountry = $customer ? strtoupper( $customer->getCountry() ) : $defaultCountry; ?>
 					<select name="mphb_country" 
 					<?php
@@ -644,6 +677,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 						echo $requiredAbbr;
 						?>
 					</label>
+					<br />
 					<input type="text" name="mphb_address1" 
 					<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -658,6 +692,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 						echo $requiredAbbr;
 						?>
 					</label>
+					<br />
 					<input type="text" name="mphb_city" 
 					<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -672,6 +707,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 						echo $requiredAbbr;
 						?>
 					</label>
+					<br />
 					<input type="text" name="mphb_state" 
 					<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -686,6 +722,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 						echo $requiredAbbr;
 						?>
 					</label>
+					<br />
 					<input type="text" name="mphb_zip" 
 					<?php
 						// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
@@ -695,7 +732,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				</p>
 			<?php endif; // full address ?>
 			<p class="mphb-customer-note">
-				<label for="mphb_note"><?php esc_html_e( 'Notes', 'motopress-hotel-booking' ); ?></label>
+				<label for="mphb_note"><?php esc_html_e( 'Notes', 'motopress-hotel-booking' ); ?></label><br />
 				<textarea name="mphb_note" id="mphb_note" rows="4"></textarea>
 			</p>
 
@@ -735,7 +772,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		?>
 		<section id="mphb-billing-details" class="mphb-checkout-section">
 			<h3 class="mphb-gateway-chooser-title">
-				<?php esc_html_e( 'Secure Checkout', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Payment Method', 'motopress-hotel-booking' ); ?>
 			</h3>
 
 			<?php if ( empty( $gateways ) ) { ?>
@@ -832,7 +869,6 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 			&& ! mphb_is_create_booking_page()
 			&& $deposit < $totalPrice; // If not in the time frame, then they both will be equal
 		?>
-<div class="checkout-form-bottom">
 		<p class="mphb-total-price">
 			<output>
 				<?php esc_html_e( 'Total Price:', 'motopress-hotel-booking' ); ?>
@@ -856,7 +892,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				</output>
 			</p>
 		<?php } ?>
-
+		<p class="mphb-errors-wrapper mphb-hide"></p>
 		<?php
 	}
 
@@ -865,7 +901,6 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 	 * @param Entities\Booking $booking
 	 */
 	public static function renderCheckInDate( $booking ) {
-	    echo '<div class="mphb-check-dates">';
 		?>
 		<p class="mphb-check-in-date">
 			<span><?php esc_html_e( 'Check-in:', 'motopress-hotel-booking' ); ?></span>
@@ -873,7 +908,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				<strong>
 					<?php echo esc_html( \MPHB\Utils\DateUtils::formatDateWPFront( $booking->getCheckInDate() ) ); ?>
 				</strong>
-			</time>
+			</time>,
 			<span>
 				<?php echo esc_html_x( 'from', 'from 10:00 am', 'motopress-hotel-booking' ); ?>
 			</span>
@@ -881,7 +916,6 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				<?php echo esc_html( MPHB()->settings()->dateTime()->getCheckInTimeWPFormatted() ); ?>
 			</time>
 		</p>
-		
 		<?php
 	}
 
@@ -897,19 +931,16 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				<strong>
 					<?php echo esc_html( \MPHB\Utils\DateUtils::formatDateWPFront( $booking->getCheckOutDate() ) ); ?>
 				</strong>
-			</time>
+			</time>,
 			<span>
 				<?php echo esc_html_x( 'until', 'until 10:00 am', 'motopress-hotel-booking' ); ?>
 			</span>
-			<time datetime="until<?php echo esc_attr( MPHB()->settings()->dateTime()->getCheckOutTime() ); ?>">
+			<time datetime="<?php echo esc_attr( MPHB()->settings()->dateTime()->getCheckOutTime() ); ?>">
 				<?php echo esc_html( MPHB()->settings()->dateTime()->getCheckOutTimeWPFormatted() ); ?>
 			</time>
 		</p>
 		<?php
-    echo '</div>'; 
-
 	}
-
 
 	/**
 	 * @param Entities\Booking $booking
@@ -974,40 +1005,13 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 				   />
 
 			<?php do_action( 'mphb_sc_checkout_form', $booking, $roomDetails, $customer ); ?>
-            <p class="mphb-errors-wrapper mphb-hide"></p>
+			
+			
+
 			<p class="mphb_sc_checkout-submit-wrapper">
-				<input type="submit" class="button" value="<?php esc_attr_e( 'Proceed to checkout', 'motopress-hotel-booking' ); ?>"/>
-				<div>
-    <!-- Desktop/Tablet version (>479px) -->
-    <div class="desktop-trust-signals">
-        <div>
-            <div>
-                <p>🔒 Stripe Checkout</p>
-            </div>
-        </div>
-        <div>
-            <div>
-                <p>✔️ Instant Confirmation</p>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Mobile version (≤479px) -->
-    <div class="mobile-trust-signals">
-        <div>
-            <div>
-                <p>🔒 Stripe Checkout</p>
-            </div>
-        </div>
-        <div>
-            <div>
-                <p>✔️ Instant Confirmation</p>
-            </div>
-        </div>
-    </div>
-</div>
-			</p></div>
-            
+				<input type="submit" class="button" value="<?php esc_attr_e( 'Book Now', 'motopress-hotel-booking' ); ?>"/>
+			</p>
+
 		</form>
 		<?php
 	}

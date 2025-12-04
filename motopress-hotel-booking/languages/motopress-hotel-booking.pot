@@ -5940,7 +5940,7 @@ msgid_plural "%s accommodations found"
 msgstr[0] ""
 msgstr[1] ""
 
-msgid " from %s until %s"
+msgid " from %s - till %s"
 msgstr ""
 
 msgid "Add Accommodation"
