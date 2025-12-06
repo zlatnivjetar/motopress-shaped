@@ -36,7 +36,7 @@ class LoopRoomTypeView extends RoomTypeView {
 	}
 
 	public static function _renderAttributesTitle() {
-		echo '<h3 class="mphb-room-type-details-title">' . esc_html__( 'Details', 'motopress-hotel-booking' ) . '</h3>';
+		echo '<h3 class="mphb-room-type-details-title">' . esc_html__( 'Amenities', 'motopress-hotel-booking' ) . '</h3>';
 	}
 
 	public static function _renderAttributesListOpen() {
@@ -57,6 +57,14 @@ class LoopRoomTypeView extends RoomTypeView {
 
 	public static function _renderCategoriesListItemClose() {
 		echo '</li>';
+	}
+	
+    public static function _renderViewDetailsButtonParagraphOpen() {
+		echo '<p class="mphb-view-details-button-wrapper">';
+	}
+
+	public static function _renderViewDetailsButtonParagraphClose() {
+		echo '</p>';
 	}
 
 	public static function _renderFacilitiesListItemOpen() {
@@ -169,12 +177,13 @@ class LoopRoomTypeView extends RoomTypeView {
 	}
 
 	public static function _renderFeaturedImageParagraphOpen() {
-		echo '<p class="post-thumbnail mphb-loop-room-thumbnail">';
+		echo '<p class="post-thumbnail mphb-loop-room-thumbnail" style >';
 	}
 
 	public static function _renderFeaturedImageParagraphClose() {
 		echo '</p>';
 	}
+	
 
 	public static function _renderPriceParagraphOpen() {
 		echo '<p class="mphb-regular-price">';
@@ -208,13 +217,6 @@ class LoopRoomTypeView extends RoomTypeView {
 		echo '<br/>';
 	}
 
-	public static function _renderViewDetailsButtonParagraphOpen() {
-		echo '<p class="mphb-view-details-button-wrapper">';
-	}
-
-	public static function _renderViewDetailsButtonParagraphClose() {
-		echo '</p>';
-	}
 
 	public static function _enqueueGalleryScripts() {
 		wp_enqueue_script( 'mphb-flexslider' );

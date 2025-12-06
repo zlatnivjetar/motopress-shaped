@@ -1,53 +1,93 @@
 <?php
 /**
- * Available variables
+ * Facilities Template - Shaped Version
+ *
+ * This replaces the hardcoded icon array with the Shaped amenity icon mapper system.
+ * Uses Phosphor Icons instead of Font Awesome, Material Design Icons, and SVGs.
+ *
+ * To use: Copy this file to your theme's MotoPress template directory as facilities.php
+ * Location: your-theme/hotel-booking/loop-room-type/facilities.php
+ *
+ * Available variables:
  * - WP_Term[] $facilities
+ *
+ * @package Shaped
+ * @since 2.0.0
  */
 
-if ( ! defined( 'ABSPATH' ) ) {
-	exit;
+if (!defined('ABSPATH')) {
+    exit;
 }
 ?>
 
-<?php if ( ! empty( $facilities ) ) : ?>
+<?php if (!empty($facilities)) : ?>
+    <?php
+    // Get current room type
+    $roomType = MPHB()->getCurrentRoomType();
 
-	<?php
+    // Close any open list items from the default structure
+    echo '</li>';
 
-	/**
-	 * @hooked \MPHB\Views\LoopRoomTypeView::_renderFacilitiesListItemOpen              - 10
-	 * @hooked \MPHB\Views\LoopRoomTypeView::_renderFacilitiesTitle                     - 20
-	 * @hooked \MPHB\Views\LoopRoomTypeView::_renderAttributesListItemValueHolderOpen   - 30
-	 */
-	do_action( 'mphb_render_loop_room_type_before_facilities' );
+    // Start our custom amenities structure
+    echo '<div class="mphb-room-amenities-wrapper">';
+    echo '<ul class="mphb-room-amenities-list">';
 
-	$facilities = array_map(
-		function( $facility ) {
+    // ─── Size ───
+    $size = $roomType->getSize();
+    if (!empty($size)) {
+        echo '<li class="mphb-amenity-item">';
+        echo '<span class="mphb-amenity-icon"><i class="ph ph-ruler" aria-hidden="true"></i></span>';
+        echo '<span class="mphb-amenity-text">' . esc_html($size) . 'm²</span>';
+        echo '</li>';
+    }
 
-			$facilityLink = get_term_link( $facility );
+    // ─── Bed Type ───
+    $bedType = $roomType->getBedType();
+    if (!empty($bedType)) {
+        echo '<li class="mphb-amenity-item">';
+        echo '<span class="mphb-amenity-icon"><i class="ph ph-bed" aria-hidden="true"></i></span>';
+        echo '<span class="mphb-amenity-text">' . esc_html($bedType) . '</span>';
+        echo '</li>';
+    }
 
-			if ( is_wp_error( $facilityLink ) ) {
-				  $facilityLink = '#';
-			}
+    // ─── Process Facilities with Shaped Icon Mapper ───
+    $orderedAmenities = [];
+    $displayedTypes = [];
 
-			$facilityLink = sprintf( '<a href="%s">%s</a>', esc_url( $facilityLink ), $facility->name );
-			$html         = '<span class="' . esc_attr( 'facility-' . $facility->slug ) . '">' . $facilityLink . '</span>';
+    foreach ($facilities as $facility) {
+        // Get icon data using Shaped helper function
+        // Note: skip_fallback is false here so we manually check, but you can set it to true
+        // to automatically skip amenities without icons
+        $icon_data = shaped_get_amenity_icon($facility, ['skip_fallback' => true]);
 
-			return $html;
-		},
-		$facilities
-	);
+        if ($icon_data) {
+            $label = $icon_data['label'];
 
-	$itemsDelimeter = apply_filters( 'mphb_room_type_facilities_delimiter', ', ' );
+            // Avoid duplicates (e.g., multiple TV-related facilities)
+            if (!isset($displayedTypes[$label])) {
+                $orderedAmenities[] = $icon_data;
+                $displayedTypes[$label] = true;
+            }
+        }
+    }
 
-	// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-	echo ' ' . join( $itemsDelimeter, $facilities );
+    // Sort by priority
+    usort($orderedAmenities, function($a, $b) {
+        return $a['priority'] - $b['priority'];
+    });
 
-	/**
-	 * @hooked \MPHB\Views\LoopRoomTypeView::_renderAttributesListItemValueHolderClose  - 10
-	 * @hooked \MPHB\Views\LoopRoomTypeView::_renderAdultsListItemClose                 - 20
-	 */
-	do_action( 'mphb_render_loop_room_type_after_facilities' );
-	?>
+    // Display amenities in order
+    foreach ($orderedAmenities as $amenity) {
+        echo '<li class="mphb-amenity-item">';
+        echo '<span class="mphb-amenity-icon">' . $amenity['html'] . '</span>';
+        echo '<span class="mphb-amenity-text">' . esc_html($amenity['label']) . '</span>';
+        echo '</li>';
+    }
 
-	<?php
-endif;
+    echo '</ul>';
+    echo '</div>';
+
+    // Start a new list item to maintain structure
+    echo '<li style="display:none;">';
+    ?>
+<?php endif; ?>

@@ -21,6 +21,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 		esc_html_e( 'No accommodations found', 'motopress-hotel-booking' );
 	}
 
-		echo esc_html( sprintf( __( ' from %s - till %s', 'motopress-hotel-booking' ), $checkInDate, $checkOutDate ) );
+		echo esc_html( sprintf( __( ' from %s until %s', 'motopress-hotel-booking' ), $checkInDate, $checkOutDate ) );
 	?>
 </p>
