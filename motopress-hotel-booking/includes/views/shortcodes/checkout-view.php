@@ -128,7 +128,7 @@ class CheckoutView {
 		?>
 		<section id="mphb-booking-details" class="mphb-booking-details mphb-checkout-section">
 			<h3 class="mphb-booking-details-title">
-				<?php esc_html_e( 'Booking Details', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Your stay', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php do_action( 'mphb_sc_checkout_form_booking_details', $booking, $roomDetails ); ?>
 		</section>
@@ -275,7 +275,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 			?>
 			<section class="mphb-rate-chooser mphb-checkout-item-section">
 				<h4 class="mphb-room-rate-chooser-title">
-					<?php esc_html_e( 'Choose Rate', 'motopress-hotel-booking' ); ?>
+					<?php esc_html_e( 'Room & rate', 'motopress-hotel-booking' ); ?>
 				</h4>
 
 				<?php
@@ -427,7 +427,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		?>
 		<section id="mphb-price-details" class="mphb-room-price-breakdown-wrapper mphb-checkout-section">
 			<h3 class="mphb-price-breakdown-title">
-				<?php esc_html_e( 'Price Breakdown', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Price summary', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php \MPHB\Views\BookingView::renderPriceBreakdown( $booking ); ?>
 		</section>
@@ -539,7 +539,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		}
 		?>
 		<section id="mphb-customer-details" class="mphb-checkout-section mphb-customer-details">
-			<h3 class="mphb-customer-details-title"><?php esc_html_e( 'Your Information', 'motopress-hotel-booking' ); ?></h3>
+			<h3 class="mphb-customer-details-title"><?php esc_html_e( 'Guest details', 'motopress-hotel-booking' ); ?></h3>
 			<p class="mphb-required-fields-tip">
 				<small>
 					<?php printf( esc_html__( 'Required fields are followed by %s', 'motopress-hotel-booking' ), '<abbr title="required">*</abbr>' ); ?>
@@ -726,7 +726,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		?>
 		<section id="mphb-billing-details" class="mphb-checkout-section">
 			<h3 class="mphb-gateway-chooser-title">
-				<?php esc_html_e( 'Secure Checkout', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Secure Payment', 'motopress-hotel-booking' ); ?>
 			</h3>
 
 			<?php if ( empty( $gateways ) ) { ?>
