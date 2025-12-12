@@ -139,7 +139,23 @@ final class WP_Session extends Recursive_ArrayAccess implements \Iterator, \Coun
 		// because of some cron (fix for MPI-7906).
 		if ( ! headers_sent() ) {
 
-			setcookie( 'WP_SESSION_COOKIE', $this->session_id . '||' . $this->expires . '||' . $this->exp_variant, $this->expires, COOKIEPATH, COOKIE_DOMAIN );
+			// Shaped: keep REST price endpoint stateless (no WP_SESSION_COOKIE)
+$uri = $_SERVER['REQUEST_URI'] ?? '';
+if (
+	( defined('SHAPED_NO_SESSION') && SHAPED_NO_SESSION )
+	|| ( strpos($uri, '/wp-json/shaped/v1/price') !== false )
+) {
+	return false; // or just "return;" depending on function signature
+}
+
+setcookie(
+	'WP_SESSION_COOKIE',
+	$this->session_id . '||' . $this->expires . '||' . $this->exp_variant,
+	$this->expires,
+	COOKIEPATH,
+	COOKIE_DOMAIN
+);
+
 		}
 	}
 

@@ -86,7 +86,15 @@ function wp_session_start() {
 	return $wp_session->session_started();
 }
 
-add_action( 'plugins_loaded', '\MPHB\Libraries\WP_SessionManager\wp_session_start' );
+add_action( 'plugins_loaded', function () {
+	// Shaped: keep REST price endpoint stateless (no WP_SESSION_COOKIE)
+	// Only bypass sessions for the specific price API request.
+	if ( defined( 'SHAPED_NO_SESSION' ) && SHAPED_NO_SESSION ) {
+		return;
+	}
+
+	\MPHB\Libraries\WP_SessionManager\wp_session_start();
+}, 0 );
 
 /**
  * Return the current session status.
