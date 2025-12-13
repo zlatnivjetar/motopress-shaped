@@ -145,7 +145,7 @@ class SearchResultsShortcode extends AbstractShortcode {
 		add_action( 'mphb_sc_search_results_render_excerpt', array( '\MPHB\Views\LoopRoomTypeView', 'renderExcerpt' ) );
 		add_action( 'mphb_sc_search_results_render_details', array( '\MPHB\Views\LoopRoomTypeView', 'renderAttributes' ) );
 		add_action( 'mphb_sc_search_results_render_price', array( '\MPHB\Views\LoopRoomTypeView', 'renderPriceForDates' ), 10, 2 );
-		//add_action( 'mphb_sc_search_results_render_view_button', array( '\MPHB\Views\LoopRoomTypeView', 'renderViewDetailsButton' ) );
+		add_action( 'mphb_sc_search_results_render_view_button', array( '\MPHB\Views\LoopRoomTypeView', 'renderViewDetailsButton' ) );
 		add_action( 'mphb_sc_search_results_render_book_button', array( $this, 'renderBookButton' ) );
 
 		add_action( 'mphb_sc_search_results_error', array( '\MPHB\Views\GlobalView', 'prependBr' ) );
