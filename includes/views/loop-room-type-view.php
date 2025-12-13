@@ -58,7 +58,14 @@ class LoopRoomTypeView extends RoomTypeView {
 	public static function _renderCategoriesListItemClose() {
 		echo '</li>';
 	}
+	
+    public static function _renderViewDetailsButtonParagraphOpen() {
+		echo '<p class="mphb-view-details-button-wrapper">';
+	}
 
+	public static function _renderViewDetailsButtonParagraphClose() {
+		echo '</p>';
+	}
 
 	public static function _renderFacilitiesListItemOpen() {
 		echo '<li class="mphb-room-type-facilities">';

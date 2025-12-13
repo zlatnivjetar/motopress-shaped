@@ -79,11 +79,11 @@ $wrapperClass = apply_filters( 'mphb_sc_search_results_room_type_class', join( '
 			do_action( 'mphb_sc_search_results_render_excerpt' );
 		}
 		
-		if ( $isShowViewButton ) {
+		/*if ( $isShowViewButton ) {
             echo '<p class="mphb-view-details-button-wrapper" id="detailsbutton">';
             \MPHB\Views\LoopRoomTypeView::renderViewDetailsButton();
             echo '</p>';
-        }
+        }*/
 
 
 		if ( $isShowDetails ) {
