@@ -19,4 +19,7 @@ if ( ! class_exists( 'HotelBookingPlugin' ) ) {
 	define( 'MPHB_PLUGIN_FILE', __FILE__ );
 
 	require plugin_dir_path( __FILE__ ) . 'plugin.php';
+
+	// Load Shaped Core customizations (Litepicker integration)
+	require plugin_dir_path( __FILE__ ) . 'shaped/shaped-core.php';
 }
