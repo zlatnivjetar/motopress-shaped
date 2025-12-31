@@ -2553,10 +2553,6 @@
       },
       updateCheckOutLimitations: function updateCheckOutLimitations() {
         this.checkOutDatepicker.updateCheckOutLimitations(this.checkInDatepicker.getDate());
-        // Shaped: Disable checkout until check-in is selected
-        if (!this.checkInDatepicker.getDate()) {
-          this.checkOutDatepicker.element.prop('disabled', true);
-        }
       },
 
       /**
@@ -3158,7 +3154,6 @@
             
             // Shaped: Clear checkout and chain to checkout picker
             if (self.form && self.form.checkOutDatepicker) {
-              self.form.checkOutDatepicker.element.prop('disabled', false);  // ADD THIS LINE
               self.form.checkOutDatepicker.element.val('');
               self.form.checkOutDatepicker.hiddenElement.val('');
               setTimeout(function() {
