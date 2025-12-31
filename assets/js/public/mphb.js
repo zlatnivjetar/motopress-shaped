@@ -3151,6 +3151,15 @@
           },
           onSelect: function onSelect(dates) {
             self.form.updateCheckOutLimitations();
+            
+            // Shaped: Clear checkout and chain to checkout picker
+            if (self.form && self.form.checkOutDatepicker) {
+              self.form.checkOutDatepicker.element.val('');
+              self.form.checkOutDatepicker.hiddenElement.val('');
+              setTimeout(function() {
+                self.form.checkOutDatepicker.element.datepick('show');
+              }, 150);
+            }
           },
           onDate: function onDate(date, isCurrentMonth) {
             var roomTypeCalendarData = MPHB.ajaxApiHelper.getLoadedRoomTypeCalendarData(0);
@@ -3191,9 +3200,11 @@
         this.minStayDateAfterCheckIn = result.minStayDateAfterCheckIn;
         this.maxStayDateAfterCheckIn = result.maxStayDateAfterCheckIn;
 
-        if (!this.getDate() || this.getDate() <= checkInDate) {
-          this.setDate(this.minCheckOutDateForSelection);
-        }
+        // Shaped: Removed auto-fill of checkout date
+        // Original code:
+        // if (!this.getDate() || this.getDate() <= checkInDate) {
+        //   this.setDate(this.minCheckOutDateForSelection);
+        // }
       },
       getDatepickSettings: function getDatepickSettings() {
         var self = this;
