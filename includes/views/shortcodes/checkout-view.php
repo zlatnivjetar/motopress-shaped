@@ -493,9 +493,9 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
                     $privacyPageId = get_option('wp_page_for_privacy_policy');
                     $privacyPageUrl = get_permalink($privacyPageId);
                     
-                    $termsLink = '<a class="shaped-terms-link modal-trigger" href="' . esc_url($termsPageUrl) . '" data-modal="terms">' . __('Booking Terms', 'motopress-hotel-booking') . '</a>';
-                    $privacyLink = '<a class="shaped-privacy-link modal-trigger" href="' . esc_url($privacyPageUrl) . '" data-modal="privacy">' . __('Privacy Policy', 'motopress-hotel-booking') . '</a>';
-                    
+                    $termsLink = shaped_get_terms_modal_link(__('Booking Terms', 'motopress-hotel-booking'));
+                    $privacyLink = shaped_get_privacy_modal_link(__('Privacy Policy', 'motopress-hotel-booking'));
+
                     printf(__('I agree to the %s and %s for this reservation', 'motopress-hotel-booking'), $termsLink, $privacyLink);
                 ?>
                 <abbr title="<?php esc_html_e('Required', 'motopress-hotel-booking'); ?>">*</abbr>
