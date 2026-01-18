@@ -489,10 +489,6 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
             <label>
                 <input type="checkbox" id="mphb_accept_terms" name="mphb_accept_terms" value="1" required="required" />
                 <?php
-                    $termsPageUrl = get_permalink($termsPageId);
-                    $privacyPageId = get_option('wp_page_for_privacy_policy');
-                    $privacyPageUrl = get_permalink($privacyPageId);
-                    
                     $termsLink = shaped_get_terms_modal_link(__('Booking Terms', 'motopress-hotel-booking'));
                     $privacyLink = shaped_get_privacy_modal_link(__('Privacy Policy', 'motopress-hotel-booking'));
 
@@ -501,6 +497,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
                 <abbr title="<?php esc_html_e('Required', 'motopress-hotel-booking'); ?>">*</abbr>
             </label>
         </p>
+
 
 			</section>
 			<?php
