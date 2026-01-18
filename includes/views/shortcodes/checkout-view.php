@@ -484,23 +484,24 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					</div>
 
 				<?php } ?>
+        
+        <p class="mphb-terms-and-conditions-accept">
+            <label>
+                <input type="checkbox" id="mphb_accept_terms" name="mphb_accept_terms" value="1" required="required" />
+                <?php
+                    $termsPageUrl = get_permalink($termsPageId);
+                    $privacyPageId = get_option('wp_page_for_privacy_policy');
+                    $privacyPageUrl = get_permalink($privacyPageId);
+                    
+                    $termsLink = '<a class="shaped-terms-link modal-trigger" href="' . esc_url($termsPageUrl) . '" data-modal="terms">' . __('Booking Terms', 'motopress-hotel-booking') . '</a>';
+                    $privacyLink = '<a class="shaped-privacy-link modal-trigger" href="' . esc_url($privacyPageUrl) . '" data-modal="privacy">' . __('Privacy Policy', 'motopress-hotel-booking') . '</a>';
+                    
+                    printf(__('I agree to the %s and %s for this reservation', 'motopress-hotel-booking'), $termsLink, $privacyLink);
+                ?>
+                <abbr title="<?php esc_html_e('Required', 'motopress-hotel-booking'); ?>">*</abbr>
+            </label>
+        </p>
 
-                <p class="mphb-terms-and-conditions-accept">
-                    <label>
-                        <input type="checkbox" id="mphb_accept_terms" name="mphb_accept_terms" value="1" required="required" />
-                        <?php
-                            $termsPageUrl = get_permalink($termsPageId);
-                            $privacyPageId = get_option('wp_page_for_privacy_policy');
-                            $privacyPageUrl = get_permalink($privacyPageId);
-                            
-                            $termsLink = '<a class="mphb-terms-link modal-trigger" href="' . esc_url($termsPageUrl) . '" data-modal="terms">' . __('Booking Terms', 'motopress-hotel-booking') . '</a>';
-                            $privacyLink = '<a class="mphb-privacy-link modal-trigger" href="' . esc_url($privacyPageUrl) . '" data-modal="privacy">' . __('Privacy Policy', 'motopress-hotel-booking') . '</a>';
-                            
-                            printf(__('I agree to the %s and %s for this reservation', 'motopress-hotel-booking'), $termsLink, $privacyLink);
-                        ?>
-                        <abbr title="<?php esc_html_e('Required', 'motopress-hotel-booking'); ?>">*</abbr>
-                    </label>
-                </p>
 			</section>
 			<?php
 		}
