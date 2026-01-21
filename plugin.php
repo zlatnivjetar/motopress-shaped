@@ -1730,6 +1730,9 @@ class HotelBookingPlugin {
 	}
 
 	public function initAutoUpdater() {
+		if ( apply_filters( 'mphb_disable_updates', true ) ) {
+			return;
+		}
 
 		if ( $this->settings->license()->isEnabled() ) {
 
