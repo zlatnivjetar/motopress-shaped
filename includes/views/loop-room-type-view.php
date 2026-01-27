@@ -36,7 +36,7 @@ class LoopRoomTypeView extends RoomTypeView {
 	}
 
 	public static function _renderAttributesTitle() {
-		echo '<h3 class="mphb-room-type-details-title">' . esc_html__( 'Amenities', 'motopress-hotel-booking' ) . '</h3>';
+		echo '<h6 class="mphb-room-type-details-title">' . esc_html__( 'Amenities', 'motopress-hotel-booking' ) . '</h6>';
 	}
 
 	public static function _renderAttributesListOpen() {
@@ -198,11 +198,11 @@ class LoopRoomTypeView extends RoomTypeView {
 	}
 
 	public static function _renderTitleHeadingOpen() {
-		echo '<h2 class="mphb-room-type-title entry-title">';
+		echo '<h3 class="mphb-room-type-title entry-title">';
 	}
 
 	public static function _renderTitleHeadingClose() {
-		echo '</h2>';
+		echo '</h3>';
 	}
 
 	public static function _renderBookButtonWrapperOpen() {
