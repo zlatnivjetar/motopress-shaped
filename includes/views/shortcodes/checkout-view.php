@@ -274,7 +274,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 
 			?>
 			<section class="mphb-rate-chooser mphb-checkout-item-section">
-				<h4 class="mphb-room-rate-chooser-title">
+				<h3 class="mphb-room-rate-chooser-title">
 					<?php esc_html_e( 'Room & rate', 'motopress-hotel-booking' ); ?>
 				</h4>
 
