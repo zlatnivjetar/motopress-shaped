@@ -30,46 +30,47 @@ $firstAvailableCheckInDate = mphb_availability_facade()->getFirstAvailableCheckI
 	do_action( 'mphb_sc_search_render_form_top' );
 	?>
     <div class="search-form-wrapper">
-	<p class="mphb_sc_search-check-in-date">
-		<label for="<?php echo esc_attr( 'mphb_check_in_date-' . $uniqid ); ?>">
-			<?php esc_html_e( 'Check-in', 'motopress-hotel-booking' ); ?>
-			<abbr title="<?php echo esc_attr( sprintf( _x( 'Formatted as %s', 'Date format tip', 'motopress-hotel-booking' ), MPHB()->settings()->dateTime()->getDateFormatJS() ) ); ?>">*</abbr>
-		</label>
-		<br />
-		<input
-			id="<?php echo esc_attr( 'mphb_check_in_date-' . $uniqid ); ?>"
-			data-datepick-group="<?php echo esc_attr( $uniqid ); ?>"
-			value="<?php echo esc_attr( $checkInDate ); ?>"
-			placeholder="<?php esc_attr_e( 'Check-in', 'motopress-hotel-booking' ); ?>"
-			required="required"
-			type="text"
-			inputmode="none"
-			name="mphb_check_in_date"
-			class="mphb-datepick"
-			autocomplete="off"
-			/>
-	</p>
+      <div class="search-input-wrapper">
+        <p class="mphb_sc_search-check-in-date">
+          <label for="<?php echo esc_attr( 'mphb_check_in_date-' . $uniqid ); ?>">
+            <?php esc_html_e( 'Check-in', 'motopress-hotel-booking' ); ?>
+            <abbr title="<?php echo esc_attr( sprintf( _x( 'Formatted as %s', 'Date format tip', 'motopress-hotel-booking' ), MPHB()->settings()->dateTime()->getDateFormatJS() ) ); ?>">*</abbr>
+          </label>
+          <br />
+          <input
+            id="<?php echo esc_attr( 'mphb_check_in_date-' . $uniqid ); ?>"
+            data-datepick-group="<?php echo esc_attr( $uniqid ); ?>"
+            value="<?php echo esc_attr( $checkInDate ); ?>"
+            placeholder="<?php esc_attr_e( 'Check-in', 'motopress-hotel-booking' ); ?>"
+            required="required"
+            type="text"
+            inputmode="none"
+            name="mphb_check_in_date"
+            class="mphb-datepick"
+            autocomplete="off"
+            />
+        </p>
 
-	<p class="mphb_sc_search-check-out-date">
-		<label for="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqid ); ?>">
-			<?php esc_html_e( 'Check-out', 'motopress-hotel-booking' ); ?>
-			<abbr title="<?php echo esc_attr( sprintf( _x( 'Formatted as %s', 'Date format tip', 'motopress-hotel-booking' ), MPHB()->settings()->dateTime()->getDateFormatJS() ) ); ?>">*</abbr>
-		</label>
-		<br />
-		<input
-			id="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqid ); ?>"
-			data-datepick-group="<?php echo esc_attr( $uniqid ); ?>"
-			value="<?php echo esc_attr( $checkOutDate ); ?>"
-			placeholder="<?php esc_attr_e( 'Check-out', 'motopress-hotel-booking' ); ?>"
-			required="required"
-			type="text"
-			inputmode="none"
-			name="mphb_check_out_date"
-			class="mphb-datepick"
-			autocomplete="off"
-			/>
-	</p>
-	
+        <p class="mphb_sc_search-check-out-date">
+          <label for="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqid ); ?>">
+            <?php esc_html_e( 'Check-out', 'motopress-hotel-booking' ); ?>
+            <abbr title="<?php echo esc_attr( sprintf( _x( 'Formatted as %s', 'Date format tip', 'motopress-hotel-booking' ), MPHB()->settings()->dateTime()->getDateFormatJS() ) ); ?>">*</abbr>
+          </label>
+          <br />
+          <input
+            id="<?php echo esc_attr( 'mphb_check_out_date-' . $uniqid ); ?>"
+            data-datepick-group="<?php echo esc_attr( $uniqid ); ?>"
+            value="<?php echo esc_attr( $checkOutDate ); ?>"
+            placeholder="<?php esc_attr_e( 'Check-out', 'motopress-hotel-booking' ); ?>"
+            required="required"
+            type="text"
+            inputmode="none"
+            name="mphb_check_out_date"
+            class="mphb-datepick"
+            autocomplete="off"
+            />
+        </p>
+      </div>
 	
 
 	<?php if ( MPHB()->settings()->main()->isAdultsDisabledOrHidden() ) { ?>
