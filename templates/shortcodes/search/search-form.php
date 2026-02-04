@@ -139,7 +139,7 @@ $firstAvailableCheckInDate = mphb_availability_facade()->getFirstAvailableCheckI
 
 
 	<p class="mphb_sc_search-submit-button-wrapper">
-		<input type="submit" class="button" value="<?php esc_attr_e( 'Search', 'motopress-hotel-booking' ); ?>"/>
+		<input type="submit" class="button" value="<?php esc_attr_e( 'Check availability', 'motopress-hotel-booking' ); ?>"/>
 	</p>
 	
 
