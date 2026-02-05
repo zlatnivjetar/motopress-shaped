@@ -3156,6 +3156,11 @@
             if (self.form && self.form.checkOutDatepicker) {
               self.form.checkOutDatepicker.element.val('');
               self.form.checkOutDatepicker.hiddenElement.val('');
+              // Shaped: Set checkout default date to the selected check-in date
+              // so the checkout picker opens at the same month instead of today
+              if (dates[0]) {
+                self.form.checkOutDatepicker.element.datepick('option', 'defaultDate', dates[0]);
+              }
               setTimeout(function() {
                 self.form.checkOutDatepicker.element.datepick('show');
               }, 150);
