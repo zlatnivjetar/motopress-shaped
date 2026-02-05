@@ -3151,16 +3151,15 @@
           },
           onSelect: function onSelect(dates) {
             self.form.updateCheckOutLimitations();
-            
-            // Shaped: Clear checkout and chain to checkout picker
-            if (self.form && self.form.checkOutDatepicker) {
+
+            // Shaped: Only chain to checkout picker when a date was actually selected
+            // (dates is empty when the Clear button is pressed)
+            if (dates[0] && self.form && self.form.checkOutDatepicker) {
               self.form.checkOutDatepicker.element.val('');
               self.form.checkOutDatepicker.hiddenElement.val('');
               // Shaped: Set checkout default date to the selected check-in date
               // so the checkout picker opens at the same month instead of today
-              if (dates[0]) {
-                self.form.checkOutDatepicker.element.datepick('option', 'defaultDate', dates[0]);
-              }
+              self.form.checkOutDatepicker.element.datepick('option', 'defaultDate', dates[0]);
               setTimeout(function() {
                 self.form.checkOutDatepicker.element.datepick('show');
               }, 150);
