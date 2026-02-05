@@ -14,12 +14,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 <p class="mphb_sc_search_results-info">
 	<?php
 	if ( $roomTypesCount > 0 ) {
-		echo esc_html( sprintf( _n( 'Available rooms', 'Available rooms', $roomTypesCount, 'motopress-hotel-booking' ), $roomTypesCount ) );
+		echo esc_html( sprintf( _n( 'Available', 'Available', $roomTypesCount, 'motopress-hotel-booking' ), $roomTypesCount ) );
 	} else {
 		esc_html_e( 'No accommodations found', 'motopress-hotel-booking' );
 	}
 	echo esc_html( sprintf( __( ' from %s until %s', 'motopress-hotel-booking' ), $checkInDate, $checkOutDate ) );
-	// echo esc_html( sprintf( __( ' for adults: %d, children: %d', 'motopress-hotel-booking' ), $adults, $children ) );
+	echo esc_html( sprintf( __( ' for adults: %d, children: %d', 'motopress-hotel-booking' ), $adults, $children ) );
 	// echo esc_html( sprintf( __( ' from %s to %s', 'motopress-hotel-booking' ), $checkInDate, $checkOutDate ) );
 	?>
 </p>
