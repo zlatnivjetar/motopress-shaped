@@ -145,7 +145,7 @@ class CheckoutView {
 	 */
 public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType ) {
 	?>
-		<h3 class="mphb-booking-details-title">
+		<h3 class="mphb-customer-details-title">
 			<?php esc_html_e( 'Guests', 'motopress-hotel-booking' ); ?>
 		</h3>
 	<?php
@@ -274,7 +274,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 
 			?>
 			<section class="mphb-rate-chooser mphb-checkout-item-section">
-        <h3 class="mphb-booking-details-title">
+        <h3 class="mphb-room-type-title">
           <?php echo esc_html( $roomType->getTitle() ); ?>
         </h3>
 
