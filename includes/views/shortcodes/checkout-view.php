@@ -426,7 +426,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 	public static function renderPriceBreakdown( $booking ) {
 		?>
 		<section id="mphb-price-details" class="mphb-room-price-breakdown-wrapper mphb-checkout-section">
-			<h3 class="mphb-booking-details-title">
+			<h3 class="mphb-price-breakdown-title">
 				<?php esc_html_e( 'Price summary', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php \MPHB\Views\BookingView::renderPriceBreakdown( $booking ); ?>
