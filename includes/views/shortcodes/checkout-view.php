@@ -546,7 +546,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 			<?php do_action( 'mphb_sc_checkout_form_customer_details' ); ?>
 			<p class="mphb-customer-name">
 				<label for="mphb_first_name">
-					<?php esc_html_e( 'First Name', 'motopress-hotel-booking' ); ?>
+					<?php esc_html_e( 'First name', 'motopress-hotel-booking' ); ?>
 					<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAbbr;
 					?>
@@ -560,7 +560,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 			</p>
 			<p class="mphb-customer-last-name">
 				<label for="mphb_last_name">
-					<?php esc_html_e( 'Last Name', 'motopress-hotel-booking' ); ?>
+					<?php esc_html_e( 'Last name', 'motopress-hotel-booking' ); ?>
 					<?php // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAbbr;
 					?>
