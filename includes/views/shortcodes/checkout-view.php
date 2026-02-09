@@ -426,7 +426,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 	public static function renderPriceBreakdown( $booking ) {
 		?>
 		<section id="mphb-price-details" class="mphb-room-price-breakdown-wrapper mphb-checkout-section">
-			<h3 class="mphb-price-breakdown-title">
+			<h3 class="mphb-booking-details-title">
 				<?php esc_html_e( 'Price summary', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php \MPHB\Views\BookingView::renderPriceBreakdown( $booking ); ?>
@@ -537,7 +537,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		}
 		?>
 		<section id="mphb-customer-details" class="mphb-checkout-section mphb-customer-details">
-			<h3 class="mphb-customer-details-title"><?php esc_html_e( 'Guest details', 'motopress-hotel-booking' ); ?></h3>
+			<h3 class="mphb-booking-details-title"><?php esc_html_e( 'Guest details', 'motopress-hotel-booking' ); ?></h3>
 			<p class="mphb-required-fields-tip">
 				<small>
 					<?php printf( esc_html__( 'Required fields are followed by %s', 'motopress-hotel-booking' ), '<abbr title="required">*</abbr>' ); ?>
@@ -551,7 +551,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" id="mphb_first_name" name="mphb_first_name" placeholder="Guest first name" value="<?php echo esc_attr( $firstName ); ?>" 
+				<input type="text" id="mphb_first_name" name="mphb_first_name" placeholder="Your first name..." value="<?php echo esc_attr( $firstName ); ?>" 
 																								 <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																									echo $requiredAttr;
@@ -565,7 +565,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" name="mphb_last_name" id="mphb_last_name" placeholder="Guest last name" value="<?php echo esc_attr( $lastName ); ?>" 
+				<input type="text" name="mphb_last_name" id="mphb_last_name" placeholder="Your last name..." value="<?php echo esc_attr( $lastName ); ?>" 
 																							   <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																								echo $requiredAttr;
@@ -579,7 +579,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="email" name="mphb_email" placeholder="Guest Email" 
+				<input type="email" name="mphb_email" placeholder="Your Email..." 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAttr;
@@ -593,7 +593,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" name="mphb_phone" placeholder="Guest phone number" 
+				<input type="text" name="mphb_phone" placeholder="Your phone number..." 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAttr;
@@ -965,7 +965,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 			<?php do_action( 'mphb_sc_checkout_form', $booking, $roomDetails, $customer ); ?>
             <p class="mphb-errors-wrapper mphb-hide"></p>
 			<p class="mphb_sc_checkout-submit-wrapper">
-				<input type="submit" class="button" id="checkoutbutton" value="<?php esc_attr_e( 'Proceed to checkout', 'motopress-hotel-booking' ); ?>"/>
+				<input type="submit" class="button" id="checkoutbutton" value="<?php esc_attr_e( 'Proceed to secure checkout', 'motopress-hotel-booking' ); ?>"/>
 				<div>
     <div class="trust-signals">
         <div>
