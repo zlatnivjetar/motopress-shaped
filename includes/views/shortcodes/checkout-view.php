@@ -537,7 +537,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 		}
 		?>
 		<section id="mphb-customer-details" class="mphb-checkout-section mphb-customer-details">
-			<h3 class="mphb-booking-details-title"><?php esc_html_e( 'Guest details', 'motopress-hotel-booking' ); ?></h3>
+			<h3 class="mphb-customer-details-title"><?php esc_html_e( 'Guest details', 'motopress-hotel-booking' ); ?></h3>
 			<p class="mphb-required-fields-tip">
 				<small>
 					<?php printf( esc_html__( 'Required fields are followed by %s', 'motopress-hotel-booking' ), '<abbr title="required">*</abbr>' ); ?>
