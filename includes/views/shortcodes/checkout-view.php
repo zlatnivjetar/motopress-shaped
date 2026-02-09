@@ -128,7 +128,7 @@ class CheckoutView {
 		?>
 		<section id="mphb-booking-details" class="mphb-booking-details mphb-checkout-section">
 			<h3 class="mphb-booking-details-title">
-				<?php esc_html_e( 'Your stay', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Secure your stay', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php do_action( 'mphb_sc_checkout_form_booking_details', $booking, $roomDetails ); ?>
 		</section>
@@ -145,9 +145,9 @@ class CheckoutView {
 	 */
 public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType ) {
 	?>
-	<h3 class="mphb-room-type-title">
-		<?php echo esc_html( $roomType->getTitle() ); ?>
-	</h3>
+		<h3 class="mphb-booking-details-title">
+			<?php esc_html_e( 'Guests', 'motopress-hotel-booking' ); ?>
+		</h3>
 	<?php
 }
 
@@ -274,9 +274,9 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 
 			?>
 			<section class="mphb-rate-chooser mphb-checkout-item-section">
-				<h3 class="mphb-room-rate-chooser-title">
-					<?php esc_html_e( 'Room & rate', 'motopress-hotel-booking' ); ?>
-				</h3>
+        <h3 class="mphb-room-type-title">
+          <?php echo esc_html( $roomType->getTitle() ); ?>
+        </h3>
 
 				<?php
 				foreach ( $allowedRates as $rate ) {
@@ -551,7 +551,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" id="mphb_first_name" name="mphb_first_name" value="<?php echo esc_attr( $firstName ); ?>" 
+				<input type="text" id="mphb_first_name" name="mphb_first_name" placeholder="Guest first name" value="<?php echo esc_attr( $firstName ); ?>" 
 																								 <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																									echo $requiredAttr;
@@ -565,7 +565,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" name="mphb_last_name" id="mphb_last_name" value="<?php echo esc_attr( $lastName ); ?>" 
+				<input type="text" name="mphb_last_name" id="mphb_last_name" placeholder="Guest last name" value="<?php echo esc_attr( $lastName ); ?>" 
 																							   <?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 																								echo $requiredAttr;
@@ -579,7 +579,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="email" name="mphb_email" 
+				<input type="email" name="mphb_email" placeholder="Guest Email" 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAttr;
@@ -593,7 +593,7 @@ public static function renderRoomTypeTitle( $reservedRoom, $roomIndex, $roomType
 					echo $requiredAbbr;
 					?>
 				</label>
-				<input type="text" name="mphb_phone" 
+				<input type="text" name="mphb_phone" placeholder="Guest phone number" 
 				<?php
 					// phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					echo $requiredAttr;
