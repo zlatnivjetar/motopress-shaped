@@ -1414,7 +1414,17 @@
 				inst.div.outerHeight()) > browserHeight;
 			inst.div.css('position', isFixed ? 'fixed' : 'absolute');
 			var alignment = inst.options.alignment;
-			if (alignment === 'topLeft') {
+			if (alignment === 'center') {
+				inst.div.css('position', 'fixed');
+				var popupWidth = inst.div.outerWidth();
+				var popupHeight = inst.div.outerHeight();
+				offset = {
+					left: Math.max(0, (browserWidth - popupWidth) / 2),
+					top: Math.max(0, (browserHeight - popupHeight) / 2)
+				};
+				return offset;
+			}
+			else if (alignment === 'topLeft') {
 				offset = {left: alignL, top: above};
 			}
 			else if (alignment === 'topRight') {
