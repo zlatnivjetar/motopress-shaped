@@ -3277,19 +3277,6 @@
       },
       updateCheckOutLimitations: function updateCheckOutLimitations() {
         this.checkOutDatepicker.updateCheckOutLimitations(this.checkInDatepicker.getDate());
-      },
-      'submit': function(el, e) {
-        // Ensure mphb_adults value is included in the GET redirect URL
-        var adultsEl = el.find('[name="mphb_adults"]');
-        if (adultsEl.length) {
-          var val = adultsEl.last().val();
-          var hidden = el.find('input.mphb-search-adults-hidden');
-          if (hidden.length) {
-            hidden.val(val);
-          } else {
-            el.append('<input type="hidden" class="mphb-search-adults-hidden" name="mphb_adults" value="' + val + '" />');
-          }
-        }
       }
     });
     MPHB.RoomBookSection = can.Control.extend({}, {
