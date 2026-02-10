@@ -493,7 +493,8 @@
           firstDay: MPHB._data.settings.firstDay,
           pickerClass: MPHB._data.settings.datepickerClass,
           useMouseWheel: false,
-          showSpeed: 0
+          showSpeed: 0,
+          alignment: 'center'
         };
         var datepickSettings = $.extend(defaultSettings, this.getDatepickSettings());
         this.element.datepick(datepickSettings);
