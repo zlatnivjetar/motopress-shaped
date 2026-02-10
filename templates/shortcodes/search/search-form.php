@@ -70,30 +70,18 @@ $firstAvailableCheckInDate = mphb_availability_facade()->getFirstAvailableCheckI
             autocomplete="off"
             />
         </p>
+        <p class="mphb_sc_search-guests">
+          <label for="<?php echo esc_attr( 'mphb_adults-' . $uniqid ); ?>">
+            <?php esc_html_e( 'Guests', 'motopress-hotel-booking' ); ?>
+          </label>
+          <br />
+          <select id="<?php echo esc_attr( 'mphb_adults-' . $uniqid ); ?>" name="mphb_adults">
+            <?php foreach ( $adultsList as $value ) { ?>
+              <option value="<?php echo esc_attr( $value ); ?>" <?php selected( $adults, $value ); ?>><?php echo esc_html( $value ); ?></option>
+            <?php } ?>
+          </select>
+        </p>
       </div>
-	
-
-	<?php if ( MPHB()->settings()->main()->isAdultsDisabledOrHidden() ) { ?>
-		<input type="hidden" id="<?php echo esc_attr( 'mphb_adults-' . $uniqid ); ?>" name="mphb_adults" value="<?php echo esc_attr( MPHB()->settings()->main()->getMinAdults() ); ?>" />
-	<?php } else { ?>
-		<p class="mphb_sc_search-adults">
-			<label for="<?php echo esc_attr( 'mphb_adults-' . $uniqid ); ?>">
-				<?php
-				if ( MPHB()->settings()->main()->isChildrenAllowed() ) {
-					esc_html_e( 'Adults', 'motopress-hotel-booking' );
-				} else {
-					esc_html_e( 'Guests', 'motopress-hotel-booking' );
-				}
-				?>
-			</label>
-			<br />
-			<select id="<?php echo esc_attr( 'mphb_adults-' . $uniqid ); ?>" name="mphb_adults" >
-				<?php foreach ( $adultsList as $value ) { ?>
-					<option value="<?php echo esc_attr( $value ); ?>" <?php selected( $adults, $value ); ?>><?php echo esc_html( $value ); ?></option>
-				<?php } ?>
-			</select>
-		</p>
-	<?php } ?>
 
 	<?php if ( MPHB()->settings()->main()->isChildrenDisabledOrHidden() ) { ?>
 		<input type="hidden" id="<?php echo esc_attr( 'mphb_children-' . $uniqid ); ?>" name="mphb_children" value="<?php echo esc_attr( MPHB()->settings()->main()->getMinChildren() ); ?>" />
