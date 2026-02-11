@@ -128,7 +128,7 @@ class CheckoutView {
 		?>
 		<section id="mphb-booking-details" class="mphb-booking-details mphb-checkout-section">
 			<h3 class="mphb-booking-details-title">
-				<?php esc_html_e( 'Secure your stay', 'motopress-hotel-booking' ); ?>
+				<?php esc_html_e( 'Selected dates', 'motopress-hotel-booking' ); ?>
 			</h3>
 			<?php do_action( 'mphb_sc_checkout_form_booking_details', $booking, $roomDetails ); ?>
 		</section>
