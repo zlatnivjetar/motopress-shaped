@@ -26,6 +26,10 @@ class RoomTypeCPT extends EditableCPT {
 		add_action( 'init', array( $this, 'initTaxManagePages' ) );
 
 		add_filter( 'use_block_editor_for_post_type', array( $this, 'useBlockEditor' ), 10, 2 );
+
+		add_action( 'init', array( $this, 'addOldAccommodationRewriteRules' ) );
+		add_action( 'template_redirect', array( $this, 'maybeRedirectAccommodation' ) );
+		add_filter( 'query_vars', array( $this, 'addAccommodationRedirectQueryVar' ) );
 	}
 
 	public function useBlockEditor( $useBlockEditor, $postType ) {
@@ -73,14 +77,13 @@ class RoomTypeCPT extends EditableCPT {
 			'show_ui'              => true,
 			'capability_type'      => $this->getCapabilityType(),
 			'map_meta_cap'         => true,
-			'has_archive'          => true,
+			'has_archive'          => false,
 			'show_in_menu'         => true,
 			'supports'             => array( 'title', 'editor', 'thumbnail', 'excerpt', 'page-attributes', 'comments' ),
 			'hierarchical'         => false,
 			'register_meta_box_cb' => array( $this, 'registerMetaBoxes' ),
 			'rewrite'              => array(
-				// translators: do not translate
-				'slug'       => _x( 'accommodation', 'slug', 'motopress-hotel-booking' ),
+				'slug'       => 'rooms',
 				'with_front' => false,
 				'feeds'      => true,
 			),
@@ -531,6 +534,64 @@ class RoomTypeCPT extends EditableCPT {
 
 	public function initTaxManagePages() {
 		$this->facilityManagePage = new ManageTaxPages\FacilityManageTaxPage( $this->facilityTaxName );
+	}
+
+	/**
+	 * Register custom query var for old /accommodation/ redirect detection.
+	 *
+	 * @param array $vars
+	 * @return array
+	 */
+	public function addAccommodationRedirectQueryVar( $vars ) {
+		$vars[] = 'mphb_old_accommodation_redirect';
+		return $vars;
+	}
+
+	/**
+	 * Add rewrite rules to catch old /accommodation/ URLs and route them
+	 * so they can be intercepted and 301 redirected to /rooms/.
+	 */
+	public function addOldAccommodationRewriteRules() {
+		// Match /accommodation/ (old archive) -> redirect to /rooms/
+		add_rewrite_rule(
+			'^accommodation/?$',
+			'index.php?mphb_old_accommodation_redirect=archive',
+			'top'
+		);
+
+		// Match /accommodation/page/N/ (old archive pagination)
+		add_rewrite_rule(
+			'^accommodation/page/([0-9]+)/?$',
+			'index.php?mphb_old_accommodation_redirect=archive&paged=$matches[1]',
+			'top'
+		);
+
+		// Match /accommodation/slug (old single room type)
+		add_rewrite_rule(
+			'^accommodation/([^/]+)/?$',
+			'index.php?mphb_room_type=$matches[1]&mphb_old_accommodation_redirect=single',
+			'top'
+		);
+	}
+
+	/**
+	 * 301 redirect old /accommodation/ URLs to /rooms/.
+	 *
+	 * - /accommodation/ -> /rooms/
+	 * - /accommodation/room-slug -> /rooms/room-slug
+	 */
+	public function maybeRedirectAccommodation() {
+		$redirect = get_query_var( 'mphb_old_accommodation_redirect' );
+
+		if ( $redirect === 'archive' ) {
+			wp_redirect( home_url( '/rooms/' ), 301 );
+			exit;
+		}
+
+		if ( $redirect === 'single' && is_singular( 'mphb_room_type' ) ) {
+			wp_redirect( get_permalink(), 301 );
+			exit;
+		}
 	}
 
 }
