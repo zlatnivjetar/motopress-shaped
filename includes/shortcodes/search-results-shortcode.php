@@ -504,6 +504,19 @@ class SearchResultsShortcode extends AbstractShortcode {
 			$this->availableRoomsCount = array_combine( $ids, $counts );
 		}
 
+		if ( ! empty( $this->availableRoomsCount ) ) {
+			$this->availableRoomsCount = apply_filters(
+				'mphb_sc_search_results_available_rooms_count',
+				$this->availableRoomsCount,
+				array(
+					'check_in_date' => $checkInDate,
+					'check_out_date' => $checkOutDate,
+					'adults' => $this->adults,
+					'children' => $this->children,
+				)
+			);
+		}
+
 		if ( ! empty( $this->availableRoomsCount ) &&
 			MPHB()->settings()->main()->isRecommendAndSearchSingleRoomTypeForRequestedGuestsCount()
 		) {
