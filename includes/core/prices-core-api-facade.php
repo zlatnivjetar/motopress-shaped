@@ -58,26 +58,14 @@ class PricesCoreAPIFacade extends AbstractCoreAPIFacade {
 	 */
 	public function getDatesWithRatesByRoomTypeId( int $roomTypeOriginalId ) {
 
-		$cacheDataId = 'getDatesWithRatesByRoomTypeId' . $roomTypeOriginalId;
-		$result      = $this->getCachedData( $cacheDataId );
+		$rates  = $this->getActiveRatesByRoomTypeId( $roomTypeOriginalId );
+		$result = array();
 
-		if ( static::CACHED_DATA_NOT_FOUND === $result ) {
-
-			$rates = $this->getActiveRatesByRoomTypeId( $roomTypeOriginalId );
-
-			$result = array();
-
-			foreach ( $rates as $rate ) {
-
-				$result = array_merge( $result, array_keys( $rate->getDatePrices() ) );
-			}
-
-			$result = apply_filters( 'mphb_get_dates_rates_for_room_type', $result, $roomTypeOriginalId );
-
-			$this->setCachedData( $cacheDataId, '', $result );
+		foreach ( $rates as $rate ) {
+			$result = array_merge( $result, array_keys( $rate->getDatePrices() ) );
 		}
 
-		return $result;
+		return apply_filters( 'mphb_get_dates_rates_for_room_type', $result, $roomTypeOriginalId );
 	}
 
 	/**
@@ -85,19 +73,9 @@ class PricesCoreAPIFacade extends AbstractCoreAPIFacade {
 	 */
 	public function getActiveRatesByRoomTypeId( int $roomTypeOriginalId ) {
 
-		$cacheDataId = 'getActiveRatesByRoomTypeId' . $roomTypeOriginalId;
-		$result      = $this->getCachedData( $cacheDataId );
+		$result = MPHB()->getRateRepository()->findAllActiveByRoomType( $roomTypeOriginalId );
 
-		if ( static::CACHED_DATA_NOT_FOUND === $result ) {
-
-			$result = MPHB()->getRateRepository()->findAllActiveByRoomType( $roomTypeOriginalId );
-
-			$result = apply_filters( 'mphb_get_room_type_active_rates', $result, $roomTypeOriginalId );
-
-			$this->setCachedData( $cacheDataId, '', $result );
-		}
-
-		return $result;
+		return apply_filters( 'mphb_get_room_type_active_rates', $result, $roomTypeOriginalId );
 	}
 
 	/**
