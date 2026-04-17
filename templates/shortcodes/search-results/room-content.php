@@ -1,27 +1,4 @@
 <?php
-/**
- * Strict RoomCloud availability gate for search-result cards.
- */
-if (class_exists('Shaped_RC_Availability_Manager')) {
-    $room_type_id = get_the_ID();
-    $check_in = isset($checkInDate) && $checkInDate instanceof DateTime
-        ? $checkInDate
-        : (isset($_GET['mphb_check_in_date']) ? sanitize_text_field(wp_unslash($_GET['mphb_check_in_date'])) : '');
-    $check_out = isset($checkOutDate) && $checkOutDate instanceof DateTime
-        ? $checkOutDate
-        : (isset($_GET['mphb_check_out_date']) ? sanitize_text_field(wp_unslash($_GET['mphb_check_out_date'])) : '');
-
-    if ($check_in && $check_out) {
-        $decision = Shaped_RC_Availability_Manager::evaluate_room_type_availability($room_type_id, $check_in, $check_out, 1);
-
-        if (($decision['source'] ?? '') === 'roomcloud' && empty($decision['is_sellable'])) {
-            return;
-        }
-    }
-}
-?>
-
-<?php
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
