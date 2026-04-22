@@ -11,6 +11,7 @@ use MPHB\Advanced\Api\ApiHelper;
 use MPHB\Entities\RecurrentSeason;
 use MPHB\Entities\Season;
 use MPHB\PostTypes\SeasonCPT;
+use MPHB\Shaped\Api\Authentication;
 use WP_Error;
 use WP_REST_Controller;
 use WP_REST_Request;
@@ -62,11 +63,11 @@ class SeasonsController extends WP_REST_Controller {
 	}
 
 	public function get_items_permissions_check( ?WP_REST_Request $request = null ) {
-		return $this->check_permissions( 'read' );
+		return Authentication::authorize( $request, 'read' );
 	}
 
 	public function create_item_permissions_check( ?WP_REST_Request $request = null ) {
-		return $this->check_permissions( 'create' );
+		return Authentication::authorize( $request, 'create' );
 	}
 
 	public function update_item_permissions_check( WP_REST_Request $request ) {
@@ -76,7 +77,7 @@ class SeasonsController extends WP_REST_Controller {
 			return true;
 		}
 
-		return $this->check_permissions( 'edit', $season->getId() );
+		return Authentication::authorize( $request, 'edit', $season->getId() );
 	}
 
 	public function get_items( WP_REST_Request $request ) {
@@ -171,24 +172,6 @@ class SeasonsController extends WP_REST_Controller {
 		$response->set_status( $status );
 
 		return $response;
-	}
-
-	private function check_permissions( $context, $object_id = 0 ) {
-		if ( ! ApiHelper::checkPostPermissions( 'mphb_season', $context, $object_id ) ) {
-			$codes = array(
-				'read'   => 'shaped_season_forbidden',
-				'create' => 'shaped_season_create_forbidden',
-				'edit'   => 'shaped_season_edit_forbidden',
-			);
-
-			return new WP_Error(
-				$codes[ $context ],
-				'Sorry, you are not allowed to manage seasons.',
-				array( 'status' => rest_authorization_required_code() )
-			);
-		}
-
-		return true;
 	}
 
 	private function validate_request( WP_REST_Request $request ) {
