@@ -453,6 +453,7 @@ class HotelBookingPlugin {
 		$this->gatewayManager = new \MPHB\Payments\Gateways\GatewayManager();
 
 		$this->advanced  = new \MPHB\Advanced\Advanced();
+		new \MPHB\Shaped\Api\Server();
 		$this->postTypes = new \MPHB\CustomPostTypes();
 
 		$this->initRepositories();
