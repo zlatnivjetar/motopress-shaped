@@ -62,15 +62,15 @@ class SeasonsController extends WP_REST_Controller {
 		);
 	}
 
-	public function get_items_permissions_check( ?WP_REST_Request $request = null ) {
+	public function get_items_permissions_check( $request ) {
 		return Authentication::authorize( $request, 'read' );
 	}
 
-	public function create_item_permissions_check( ?WP_REST_Request $request = null ) {
+	public function create_item_permissions_check( $request ) {
 		return Authentication::authorize( $request, 'create' );
 	}
 
-	public function update_item_permissions_check( WP_REST_Request $request ) {
+	public function update_item_permissions_check( $request ) {
 		$season = $this->get_season_entity( (int) $request['id'] );
 
 		if ( ! $season ) {
@@ -80,7 +80,7 @@ class SeasonsController extends WP_REST_Controller {
 		return Authentication::authorize( $request, 'edit', $season->getId() );
 	}
 
-	public function get_items( WP_REST_Request $request ) {
+	public function get_items( $request ) {
 		$seasons = MPHB()->getSeasonRepository()->findAll(
 			array(
 				'post_status' => array( 'publish', 'draft', 'pending', 'future', 'private' ),
@@ -117,7 +117,7 @@ class SeasonsController extends WP_REST_Controller {
 		);
 	}
 
-	public function create_item( WP_REST_Request $request ) {
+	public function create_item( $request ) {
 		$validated = $this->validate_request( $request );
 		if ( is_wp_error( $validated ) ) {
 			return $validated;
@@ -137,7 +137,7 @@ class SeasonsController extends WP_REST_Controller {
 		return $this->respond_with_season( $savedSeason, 201 );
 	}
 
-	public function update_item( WP_REST_Request $request ) {
+	public function update_item( $request ) {
 		$season = $this->get_season_entity( (int) $request['id'], true );
 		if ( ! $season ) {
 			return new WP_Error( 'shaped_season_not_found', 'Season not found.', array( 'status' => 404 ) );
