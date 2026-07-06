@@ -3165,6 +3165,14 @@
                 self.form.checkOutDatepicker.element.datepick('show');
               }, 150);
             }
+
+            // Shaped: notify the single-room checkout-limit hook (shaped-core
+            // assets/js/search-calendar-checkout-limit.js), if loaded, so the
+            // checkout calendar can be capped to a range at least one room
+            // type can actually fulfil. No-op if the script isn't present.
+            if (window.ShapedSearchCalendar && typeof window.ShapedSearchCalendar.onCheckInSelected === 'function') {
+              window.ShapedSearchCalendar.onCheckInSelected(dates[0] || null, self.form.checkOutDatepicker);
+            }
           },
           onDate: function onDate(date, isCurrentMonth) {
             var roomTypeCalendarData = MPHB.ajaxApiHelper.getLoadedRoomTypeCalendarData(0);
